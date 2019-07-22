@@ -1,1 +1,1 @@
-jekyll build JEKYLL_ENV=production --destination ../whoiszxl.github.io/ && cd ../whoiszxl.github.io/ && git add . && git commit -m "update blog." && git push origin master
+bundle exec jekyll build JEKYLL_ENV=production --destination ../whoiszxl.github.io/ && cd ../whoiszxl.github.io/ && git add . && git commit -m "update blog." && git push origin master
