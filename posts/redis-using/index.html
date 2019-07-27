@@ -1,0 +1,103 @@
+<!doctype html><html lang="en"><head><title>Redis简介及常用命令 | C137漫游指南</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="favicon.ico" rel="apple-touch-icon"><link href="https://cdn.bootcss.com/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"><link href="https://cdn.bootcss.com/font-awesome/5.1.0/css/all.css" rel="stylesheet"><link href="/assets/css/styles.css" rel="stylesheet"> <script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.min.js"></script> <script src="https://cdn.bootcss.com/twitter-bootstrap/4.0.0/js/bootstrap.min.js" async></script> <script src="/assets/js/dist/commons.js" async></script> <script> (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','/assets/lib/google-analytics/js/analytics.js','ga'); ga('create', 'UA-144281518-1', 'auto'); ga('send', 'pageview'); </script><link type="application/atom+xml" rel="alternate" href="/rss-feed.xml" /><body data-spy="scroll" data-target="#toc"><div id="sidebar" class="d-flex flex-column"><div id="nav-wrap"><div id="logo-wrap" class="d-flex justify-content-center"><div id="logo"> <a href="/" alt="site-logo"> <img src="/assets/img/r&m.jpg"></img> </a></div></div><div id="site-title" class="d-flex justify-content-center align-items-center"> <a href="/">C137漫游指南</a></div><div id="site-slogan" class="font-italic">饿死没粮.</div><ul class="nav flex-column"><li class="nav-item d-flex justify-content-center "> <a href="/" class="nav-link d-flex justify-content-center align-items-center w-100">首页</a></li><li class="nav-item d-flex justify-content-center "> <a href="/tabs/categories/" class="nav-link d-flex justify-content-center align-items-center w-100">分类</a></li><li class="nav-item d-flex justify-content-center "> <a href="/tabs/tags/" class="nav-link d-flex justify-content-center align-items-center w-100">标签</a></li><li class="nav-item d-flex justify-content-center "> <a href="/tabs/archives/" class="nav-link d-flex justify-content-center align-items-center w-100">归档</a></li><li class="nav-item d-flex justify-content-center "> <a href="/tabs/about/" class="nav-link d-flex justify-content-center align-items-center w-100">关于</a></li><span class="cursor"></span></ul></div><div class="contact d-flex justify-content-around mt-3"> <a href="https://github.com/whoiszxl" target="_blank"> <i class="fab fa-github"></i> </a> <a href="https://twitter.com/whoiszxl" target="_blank"> <i class="fab fa-twitter"></i> </a> <a href="mailto:whoiszxl@gmail.com" target="_blank"> <i class="fas fa-envelope"></i> </a> <a href="/rss-feed.xml" target="_blank"> <i class="fas fa-rss"></i> </a></div></div><div id="main-wrap"><div id="topbar" class="bg-white row justify-content-center topbar-down"><div id="topbar-main" class="d-flex h-100 align-items-center justify-content-between col-12 col-md-12 col-lg-11 col-xl-11 pl-md-2 pr-md-2 pl-lg-2 pr-lg-2"> <span id="breadcrumb"> <span> <a href="/">Posts</a> </span> <span>Redis简介及常用命令</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrap"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" placeholder="Search..."> </span> <a href="javascript:;">Cancel</a></div></div><div id="main"><div class="row justify-content-center bg-white"><div class="col-12 col-lg-11 col-xl-8"><div id="post-wrap" class="pl-sm-2 pr-sm-2 pl-xl-3"><div class="post"><h1 data-toc-skip>Redis简介及常用命令</h1><div class="post-meta text-muted d-flex flex-wrap"><div> 24 Jul 2019 on <a href='/categories/nosql/'>nosql</a>, <a href='/categories/redis/'>redis</a></div><div> Updated today</div></div><div class="post-content"><h3 id="redis初识">Redis初识</h3><h4 id="redis是什么">Redis是什么</h4><p>1.是一个开源的项目 2.一个基于键值对的存储服务系统 3.具有多种数据结构,字符串,map,list等 4.性能高,功能丰富</p><h4 id="redis的特性">Redis的特性</h4><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. 速度快 a.官方10W OPS[operation per second] b.数据存在内存是高效的根本 c.使用C语言编写和单线程模式
+2. 持久化 a.使用AOF,RDB将数据异步保存到磁盘 
+3. 多种数据结构 a.String,HashTables,LinkedList,Set,SortedSet五种基本 b.位图BitMaps c.超小内存唯一值计数HyperLogLog d.地理信息定位GEO
+4. 支持多种语言
+5. 功能丰富 a.可以做发布订阅队列 b.可以做分布式事务,并发锁等等 c.Lua脚本
+6. 简单 a.23000 lines of code,it's easy b.不依赖外部库 c.单线程模型
+7. 主从复制 a.支持
+8. 高可用,分布式 a.使用Sentinel哨兵支持高可用(v2.8) b.Cluster支持分布式(v3.0)
+</code></pre></div></div><h4 id="使用场景">使用场景</h4><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. 用作大数据量时候的中间件缓存系统
+2. 可以做计数器
+3. 可以做发布订阅消息队列系统
+4. 可以实现排行榜功能
+5. 社交平台使用
+6. 实时系统
+7. EC电商秒杀活动
+</code></pre></div></div><h3 id="linux安装">Linux安装</h3><h4 id="下载">下载</h4><ol><li>wget http://download.redis.io/releases/redis-3.2.9.tar.gz</li><li>tar -zxvf redis-3.0.7.tar.gz -C ../app/</li><li>ln -s redis-3.0.7 redis</li><li>cd redis &amp;&amp; make &amp;&amp; make install</li></ol><h4 id="可执行文件说明">可执行文件说明</h4><ol><li>redis-server – 启动redis服务器的</li><li>redis-cli – redis命令客户端</li><li>redis-benchmak – 性能测试</li><li>redis-check-aof – aof修复工具</li><li>redis-check-dump – rdb文件检查工具</li><li>redis-sentinel – 哨兵模式</li></ol><h4 id="三种启动方式">三种启动方式</h4><ol><li>简单启动 命令:<code class="highlighter-rouge">redis-server</code>,直接前台启动</li><li>动态参数启动 命令:<code class="highlighter-rouge">redis-server --port 6666</code>,直接启动配置参数</li><li><code class="highlighter-rouge">redis-server config_file</code>配置文件启动<blockquote><p>连接客户端:使用命令:<code class="highlighter-rouge">redis-cli -h localhost -p 6379</code></p></blockquote></li></ol><h4 id="redis常用配置">Redis常用配置</h4><ol><li>daemonize 配置是否是后台守护进程启动</li><li>port 配置端口号</li><li>logfile 配置系统日志文件存放地址</li><li>dir 配置redis工作目录</li></ol><h3 id="redis通用命令数据结构">Redis通用命令数据结构</h3><h4 id="通用命令">通用命令</h4><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. keys [pattern]  #遍历所有的符合pattern的key出来， 如：keys aa*,keys[a-z]*,keys a?, 生产环境一般不使用，因为数据量大直接遍历的话很慢
+2. dbsize 计算出key的总数，通过内部计数器实现，不消耗性能
+3. exists key 判断一个key是否存在，存在则返回1，不存在返回0
+4. del key [key ...] 删除一个或者多个key，返回删除的数量
+5. expire key seconds 设置key在seconds秒之后过期，使用ttl key可以查看剩余秒数，到期之后返回-2，使用persist key可以中断倒计时
+
+注意点： redis是单线程模型，同一个时间里面只会运行一条命令，避免在线上去使用一些很慢的命令，防止系统运行需要的操作被阻塞。
+</code></pre></div></div><h4 id="字符串键值结构">字符串键值结构</h4><p>可以存字符串，数字，二进制，json串，一般json用得多，使用在缓存，计数器，分布式锁等场景中。 API:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. get key 获取一个key的value
+2. set key value 设置一个键值对
+3. del 删除一个键值对
+4. incr 对int值自增1，不存在则新建一个key并且设置为1
+5. decr 对int值自减1，不存在则新建一个key并且设置为-1
+6. incrby key k 对int值自增k，不存在则新建一个key并且设置为k
+7. decrby key k 对int值自减k，不存在则新建一个key并且设置为-k
+</code></pre></div></div><p>API使用场景：</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. incr user_id:pageview 应用在访客数量统一，因为是单线程，再大的并发量也不会存在线程冲突的问题。
+2. 缓存视频信息，list列表，文章明细等需要大量访问且及时性不高的东西
+3. 分布式id自增生成
+</code></pre></div></div><p>扩展API:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1.set key value    不管key是否存在都设置
+2.setnx key value  key不存在才设置
+3.set key value xx key存在才设置
+
+1.mget key1 key2  批量获取key，原子操作，可以节省网络传输的时间
+2.mset key value kk vv 批量设置key value
+
+1.getset key newvalue 设置一个key新的value，并返回旧的value
+2.append key value 将value追加到旧的value中去
+3.strlen key 计算key的长度，注意中文长度（UTF-8一个字占俩，显示十六进制码的为3个长度）
+4.incrbyfloat key 3.5 浮点自增
+5.getrange key start end 获取key的value中start-&gt;end的值
+6.setrange key index value 设置指定下标对应的值
+</code></pre></div></div><h4 id="hashtable">HashTable</h4><p>就是一个map的map，字段field不能相同，value可以相同。<br /> API:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1.hget key field  获取hash key对应的field的value
+2.hset key field value 设置hash key对应的field的value
+3.hexists key field 判断hash key是否有field
+4.hlen key 获取key中field的数量
+5.hmget key field1 field2 批量获取一个key中的一批field的值
+6.hmset key field1 value1 field2 value2 批量设置一个key中的一批field的值
+7.hgetall key 返回key对应的所有field和value
+8.hvals key 返回key对应的所有的value
+9.hkeys key 返回key对应的所有的key
+</code></pre></div></div><h4 id="list列表结构">List列表结构</h4><p>API:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1.rpush key value1 value2 value3  从右边依次添加value1 value2 value3
+2.lpush key value1 value2 value3  从左边依次添加value1 value2 value3
+3.linsert key before|after value newValue  在指定的value值前后插入newValue
+4.lpop/rpop key  从列表左右边弹出一个item
+5.lrem count value  根据count从列表中删除所有value相等的项。 
+    count=0,删除所有
+    count&gt;0,从左到右，删除最多count个。
+    count&lt;0,从右到左，删除最多-count个。
+6.ltrim key start end 按照start--end截取list列表
+7.lrange key start end(包含end) 按照start--end获取list列表
+8.lindex key index 获取指定位置的值
+9.llen key 获取列表的长度
+10.lset key index newValue 改变index下标的值
+</code></pre></div></div><p>API使用场景：</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>我关注的人的微博的timeline，每次关注的人发了微博就lpush到我的时间线list里面
+</code></pre></div></div><h4 id="set集合">set集合</h4><p>特点：无序,不重复<br /> API:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1.sadd key value 向key中添加value,value已存在的话则添加失败
+2.srem key value 删除一个value
+3.scard key 计算key集合的大小
+4.sismember key name 判断 name 是否在集合key中
+5.srandmember key count 从集合中随机挑选count个元素出来
+6.spop key 从集合中随机弹出一个元素
+7.sdiff aa bb 取出aa bb之间的差集,彼此不同的元素
+8.sinter aa bb 取出aa bb的交集,相同的元素
+9.sunion aa bb 取出并集
+</code></pre></div></div><p>API使用场景：</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1.抽奖可以使用srandmember随机挑选出一些来
+2.点赞,喜欢等功能可以使用,将用户id存入set中
+</code></pre></div></div><h4 id="有序集合">有序集合</h4><p>API:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1.zadd key score element 添加score和element
+2.zrem key element 删除元素
+3.zscore key element 返回element的分数
+4.zincrby key score element 增加或者减少元素的分数
+5.zcard key 返回元素的个数
+6.zrange key start end 返回指定索引范围内的升序元素
+7.zrangebyscore key min max 返回指定分数范围内的升序元素
+8.zremrangebyrank/zremrangebyscore key start end 删除指定排名内/分数内的升序元素
+</code></pre></div></div><h3 id="redis扩展功能">Redis扩展功能</h3><h4 id="慢查询">慢查询</h4><p>生命周期:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1.Client客户端发送命令到Redis
+2.Redis中的命令通过单线程进行排队
+3.一步一步执行命令
+4.一步一步返回结果到Client
+</code></pre></div></div><p>慢查询发生在第三步执行命令的时候,慢查询是客户端超时的一个可能因素<br /> 动态配置慢查询:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1.config set slowlog-max-len 1000 保存1000条日志记录
+2.config set slowlog-log-slower-than 1000 超过1000微秒就记录
+</code></pre></div></div><p>慢查询命令:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1.slowlog get [n] 获取慢查询队列 n:指定条数
+2.slowlog len 获取慢查询队列长度
+3.slowlog reset 清空慢查询队列
+</code></pre></div></div><p>注意:</p><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1.slowlog-max-len不要设置过大,默认10ms,通常设置1ms
+2.slowlog-log-slower-than不要过小,一般1000左右
+3.定期持久化慢查询
+</code></pre></div></div><h4 id="pipeline流水线">pipeline流水线</h4><p>普通的redis操作的网络传输消耗是:n次网络时间+n次命令时间<br /> 而流水线操作是直接将命令一次性打包传输过去,so: 1次网络时间+n次命令时间<br /> redis都是微秒级别的,所以很大一部分优化点可以在网络传输上<br /> 例:循环一万次set值,不用pipeline需要50S,使用则仅需0.7S.<br /> 注意:数据量超大的话还是要拆分,pipeline每次只能作用在一个redis节点上</p><h4 id="发布订阅">发布订阅</h4><div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>发布消息:PUBLISH my:message "hello world"
+订阅消息:SUBSCRIBE my:message
+取消订阅:UNSUBSCRIBE my:message #一个或多个
+</code></pre></div></div><h4 id="其他">其他</h4><p>消息队列， Bitmap， hyperloglog， GEO等</p></div><div class="post-tail text-muted"><div class="mb-2"> <a href="/tags/nosql/" class="post-tag no-text-decoration" >nosql</a>&ensp; <a href="/tags/nosql/" class="post-tag no-text-decoration" >nosql</a></div></div></div><div class="post-pager d-flex justify-content-between"> <a href="/posts/init-blog-post/" class="btn btn-outline-primary"> <i class="fas fa-angle-left mr-2"></i>OLDER POSTS </a> <a href="javascript:;" class="btn btn-outline-primary disabled"> NEWER POSTS<i class="fas fa-angle-right ml-2"></i> </a></div><div id="disqus_thread" class="pt-2 pb-4"><p class="font-italic text-muted small">Comments powered by <a href="https://disqus.com/">Disqus</a>.</p></div><script> /** * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS. * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/ var disqus_config = function() { this.page.url = 'http://localhost:4000/posts/redis-using/'; this.page.identifier = '/posts/redis-using/'; }; (function() { var isBlocked = true; var d = document, s = d.createElement('script'); s.src = 'https://whoiszxl-github-io.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); s.onload = function() { isBlocked = false; }; (d.head || d.body).appendChild(s); setTimeout(function() { console.log("Disqus loading is blocked."); }, 3000); })(); </script> </script> <noscript> Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a> </noscript></div></div><div id="post-panel" class="col-xl-3 pl-2"><div class="panel-group"><div id="panel-update" class="post mb-4"><h3 data-toc-skip>最近更新</h3><ul class="post-content pl-0 mt-2 pb-1"><li><a href="/posts/redis-using/ ">Redis简介及常用命令</a></li><li><a href="/posts/init-blog-post/ ">你</a></li></ul></div><div id="panel-tags"><h3 data-toc-skip>标签</h3><div class="d-flex flex-wrap mt-2 pb-1 pr-3"><div> <a class="post-tag" href="/tags/nosql/">nosql</a> <a class="post-tag" href="/tags/writing/">writing</a> <a class="post-tag" href="/tags/poem/">poem</a></div></div></div></div><div id="toc-wrap" class="topbar-down pr-4"><h3 data-toc-skip class="pl-3 pt-2">Contents</h3><nav id="toc" data-toggle="toc"></nav></div></div><link rel="stylesheet" href="/assets/lib/bootstrap-toc-1.0.1/bootstrap-toc.min.css"> <script src="/assets/lib/bootstrap-toc-1.0.1/bootstrap-toc.min.js" async></script></div><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center"><div class="copyright"><p class="mb-0"> <span>© 2015-2019</span> <span class="copyright-owner">whoiszxl</span>. <br>Powered by <a href="https://jekyllrb.com" target="_blank">Jekyll</a>, hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.</p></div><div class="license"><p class="mb-0"> Posts on this site are licensed under a <a href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution 4.0 International (CC BY 4.0) License</a>.</p></div></div></footer></div><div id="search-result-wrap"><div class="row justify-content-center bg-white"><div class="col-12 col-md-12 col-lg-11 col-xl-9 pl-xl-5 pr-xl-5 pb-5 mt-3 mb-3"><h2 class="mt-3 pt-3 ml-3 ml-md-5 ml-lg-0" data-toc-skip>Search Results</h2><div class="post-content ml-1 ml-md-5 ml-lg-0"><ul id="search-results" ></ul></div></div></div></div></div><div id="mask"></div><script src="/assets/lib/simple-jekyll-search/search-script.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/search.json' }) </script> <a id="back-to-top" href="#" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a>
